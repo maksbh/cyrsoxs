@@ -222,7 +222,7 @@ else ()
         target_link_libraries(${OUTPUT_BASE_NAME} ${OpenCV_LIBS})
     endif ()
 endif ()
-set_property(TARGET ${OUTPUT_BASE_NAME} PROPERTY CUDA_ARCHITECTURES  52 53 60 61 62 70 72)
+set_property(TARGET ${OUTPUT_BASE_NAME} PROPERTY CUDA_ARCHITECTURES  native)
 
 if (ENABLE_TEST)
     if (PYBIND)

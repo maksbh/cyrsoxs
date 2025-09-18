@@ -445,6 +445,9 @@ int cudaMain(const UINT *voxel,
     } else {
       std::cout << "[INFO] [GPU = " << dprop.name << "] : " << energyStart << "eV -> " << energyEnd << "eV\n";
     }
+    NppStreamContext nppCtx;
+    nppCtx.hStream = 0; // NULL stream
+    
 
 
 #ifdef PROFILING
@@ -798,7 +801,8 @@ int cudaMain(const UINT *voxel,
                                         voxel[1] * sizeof(Real),
                                         rect,
                                         coeffs,
-                                        NPPI_INTER_LINEAR);
+                                        NPPI_INTER_LINEAR,
+                                        nppCtx);
 
           if (status < 0) {
             std::cout << "Image rotation failed with error = " << status << "\n";
@@ -882,7 +886,8 @@ int cudaMain(const UINT *voxel,
                                       voxel[1] * sizeof(Real),
                                       rect,
                                       coeffs,
-                                      NPPI_INTER_LINEAR);
+                                      NPPI_INTER_LINEAR,
+                                      nppCtx);
 
         if (status < 0) {
           std::cout << "Image rotation failed with error = " << status << "\n";
@@ -1090,6 +1095,9 @@ int cudaMainStreams(const UINT *voxel,
     rect.width = voxel[1];
     rect.x = 0;
     rect.y = 0;
+
+    NppStreamContext nppCtx;
+    nppCtx.hStream = 0; // NULL stream
 
 
     const UINT ompThreadID = omp_get_thread_num();
@@ -1426,7 +1434,8 @@ int cudaMainStreams(const UINT *voxel,
                                         voxel[1] * sizeof(Real),
                                         rect,
                                         coeffs,
-                                        NPPI_INTER_LINEAR);
+                                        NPPI_INTER_LINEAR,
+                                        nppCtx);
 
           if (status < 0) {
             std::cout << "Image rotation failed with error = " << status << "\n";
@@ -1508,7 +1517,8 @@ int cudaMainStreams(const UINT *voxel,
                                       voxel[1] * sizeof(Real),
                                       rect,
                                       coeffs,
-                                      NPPI_INTER_LINEAR);
+                                      NPPI_INTER_LINEAR,
+                                      nppCtx);
 
         if (status < 0) {
           std::cout << "Image rotation failed with error = " << status << "\n";
